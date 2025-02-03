@@ -21,6 +21,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet.frameguard({
   action: "sameorigin"
 }));
+app.use(helmet.dnsPrefetchControl({
+  action: "false"
+}))
 //Sample front-end
 app.route('/b/:board/')
   .get(function (req, res) {
