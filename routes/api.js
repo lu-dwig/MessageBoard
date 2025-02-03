@@ -35,7 +35,12 @@ module.exports = function (app) {
     if(!newThread.board || newThread.board === '') {
       newThread.board = req.params.board
     }
-  })
+    newThread.createdon_ = new Date().toUTCString()
+    newThread.bumpedon_ = new Date().toUTCString()
+    newThread.reported = false
+    newThread.replies = []
+    
+})
 
   
   app.route('/api/threads/:board');
