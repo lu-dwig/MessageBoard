@@ -39,7 +39,11 @@ module.exports = function (app) {
     newThread.bumpedon_ = new Date().toUTCString()
     newThread.reported = false
     newThread.replies = []
-    
+    newThread.save((err, savedThread) => {
+      if (!err && savedThread){
+        return res.redirect('/b/' + savedThread.board + '/' + savedThread._id )
+      }
+    })
 })
 
   
