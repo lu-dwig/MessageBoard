@@ -28,6 +28,16 @@ module.exports = function (app) {
 
   const Reply = mongoose.model('Reply', replySchema);
   const Thread = mongoose.model('Thread', threadSchema);
+
+  app.post('/api/threads/:board', (req, res) => {
+    console.log(req.body)
+    const newThread = new Thread(req.body)
+    if(!newThread.board || newThread.board === '') {
+      newThread.board = req.params.board
+    }
+  })
+
+  
   app.route('/api/threads/:board');
     
   app.route('/api/replies/:board');
