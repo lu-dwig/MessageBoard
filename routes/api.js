@@ -14,17 +14,20 @@ module.exports = function (app) {
     delete_password: {type: String, required: true},
     createdon_: {type: Date, required: true},
     reported: {type: Boolean, required: true}
-  });
+  })
 
   const threadSchema = new mongoose.Schema({
     text : {type: String, required: true},
     delete_password: {type: String, required: true},
+    board: {type: String, required: true},
     createdon_: {type: Date, required: true},
     bumpedon_: {type: Date, required: true},
     reported: {type: Boolean, required: true},
     replies: [replySchema]
   })
-  
+
+  const Reply = mongoose.model('Reply', replySchema);
+  const Thread = mongoose.model('Thread', threadSchema);
   app.route('/api/threads/:board');
     
   app.route('/api/replies/:board');
