@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 module.exports = function (app) {
 
-  const uri = 'mongodb+srv://Schleswig:' + process.env.PW + '@cluster0.u51m4.mongodb.net/Message-Board.message-board?retryWrites=true&w=majority&appName=Cluster0'
+  const uri = 'mongodb+srv://Schleswig:' + process.env.PW + '@cluster0.u51m4.mongodb.net/Message-Board?retryWrites=true&w=majority&appName=Cluster0'
   mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
   const replySchema = new mongoose.Schema({
