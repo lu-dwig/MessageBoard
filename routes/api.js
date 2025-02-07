@@ -54,6 +54,16 @@ module.exports = function (app) {
     const newReply = new Reply(req.body)
     newReply.createdon_ = new Date().toUTCString()
     newReply.reported = false
+    Thread.findByIdAndUpdate(
+      req.body.thread_id,
+      { $push: { replies: newReply }, bumpedon_: new Date().toUTCString() }, 
+      { new: true },
+      (err , updatedThread) => {
+        if (!err && updatedThread){
+          res.redirect('/b/' + updatedThread.board + '/' + updatedThread.id + '/' + '?new_reply_id=' + newReply.id)
+        }
+      }
+    )
   })
   app.route('/api/threads/:board');
     
