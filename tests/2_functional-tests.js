@@ -12,18 +12,19 @@ suite('Functional Tests', function() {
 
     test (' Create a new Thread', (done) => {
         chai.request(server)
-           .post('/api/threads/test')
-           .send({
+            .post('/api/threads/test')
+            .send({
                 board: 'test',
                 text: 'Functional Test Thread',
                 delete_password: testThreadPass
-           })
-           .end((err, res) => {
+            })
+            .end((err, res) => {
                 assert.equal(res.status, 200);
                 const createdThreadId = res.redirects[0].split('/')[res.redirects[0].split('/').length - 1];
                 testThreadId = createdThreadId
                 done();
             });
     })
+    
 
 });

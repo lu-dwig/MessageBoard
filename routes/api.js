@@ -46,7 +46,15 @@ module.exports = function (app) {
     })
 })
 
-  
+  app.post('/api/threads/:board', (req, res) => {
+
+  })
+
+  app.post('/api/replies/:board', (req, res) => {
+    const newReply = new Reply(req.body)
+    newReply.createdon_ = new Date().toUTCString()
+    newReply.reported = false
+  })
   app.route('/api/threads/:board');
     
   app.route('/api/replies/:board');
