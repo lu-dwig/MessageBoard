@@ -47,6 +47,7 @@ suite('Functional Tests', function() {
             .send()
             .end((err, res) => {
                 assert.isArray(res.body)
+                assert.isAtMost(res.body, 10)
                 let firstThread = res.body[0]
                 assert.isUndefined(firstThread.delete_password)
                 assert.isAtMost(firstThread.replies.length, 3)
