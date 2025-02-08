@@ -148,7 +148,7 @@ module.exports = function (app) {
             reply.delete_password = undefined
             reply.reported = undefined
           }) 
-          return res.json(arrayOfThreads)
+          return res.json(thread)
         }
       }
     )
