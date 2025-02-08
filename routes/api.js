@@ -139,13 +139,27 @@ module.exports = function (app) {
           thread.replies.sort((thread1, thread2) =>{
             return thread2.createdon_ - thread1.createdon_
           })
-          
+
           /* Remove Delete Pass from Replies */
           thread.replies.forEach((reply) =>{
             reply.delete_password = undefined
             reply.reported = undefined
           }) 
           return res.json(thread)
+        }
+      }
+    )
+  })
+
+  app.delete('/api/threads/:board', (req, res) =>{
+    Thread.findById(
+      req.body.thread_id,
+      (err, threadToDelete) =>{
+        if(!err && threadToDelete){
+
+          
+        }else{
+          return res.json('Thread Not Found')
         }
       }
     )
