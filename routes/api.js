@@ -140,6 +140,9 @@ module.exports = function (app) {
             return thread2.createdon_ - thread1.createdon_
           })
 
+          /*Limit Replies To 3*/
+          thread.replies = thread.replies.slice(0, 3)
+
           
         }
       }
