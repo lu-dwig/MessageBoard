@@ -28,7 +28,7 @@ suite('Functional Tests', function() {
 
     test('Post a reply on an existing thread', (done) => {
         chai.request(server)
-           .post('/api/replies/test/')
+           .post('/api/replies/test')
            .send({
                 thread_id: testThreadId,
                 text: 'Test Reply from Functional Test',

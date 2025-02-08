@@ -65,8 +65,22 @@ module.exports = function (app) {
       }
     )
   })
-  app.route('/api/threads/:board');
+
+  app.get('/api/threads/:board/', ( res,request) => {
+    Thread.find({board: request.params.board})
+      .sort({bumpedon_: 'desc'})
+      .limit(10)
+      .select('-delete_password -reported') 
+      .lean()
+      .exec((err, arrayOfThreads) => {
+        if (!err && arrayOfThreads){
+
+           
+        }
+      })
+  });
+  // app.route('/api/threads/:board');
     
-  app.route('/api/replies/:board');
+  // app.route('/api/replies/:board');
 
 };
