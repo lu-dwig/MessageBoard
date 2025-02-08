@@ -143,7 +143,12 @@ module.exports = function (app) {
           /*Limit Replies To 3*/
           thread.replies = thread.replies.slice(0, 3)
 
-          
+          /* Remove Delete Pass from Replies */
+          thread.replies.forEach((reply) =>{
+            reply.delete_password = undefined
+            reply.reported = undefined
+          }) 
+          return res.json(arrayOfThreads)
         }
       }
     )
