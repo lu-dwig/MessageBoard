@@ -135,6 +135,11 @@ module.exports = function (app) {
           thread.delete_password = undefined;
           thread.reported = undefined; 
           thread['replycount']= thread.replies.length
+          /* Sorting of the replies */
+          thread.replies.sort((thread1, thread2) =>{
+            return thread2.createdon_ - thread1.createdon_
+          })
+
           
         }
       }
