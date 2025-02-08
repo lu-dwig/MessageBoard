@@ -41,6 +41,7 @@ suite('Functional Tests', function() {
                 done();
             });
     })
+    
     test('Get Threads from a Board', (done) => {
         chai.request(server)
             .get('/api/threads/test')
@@ -51,6 +52,20 @@ suite('Functional Tests', function() {
                 let firstThread = res.body[0]
                 assert.isUndefined(firstThread.delete_password)
                 assert.isAtMost(firstThread.replies.length, 3)
+                done();
+            })
+    })
+
+    test('Get Replies on a Thread', (done) => {
+        chai.request(server)
+           .get('/api/replies/test')
+           .query({ thread_id: testThreadId })
+           .send()
+           .end((err, res) => {
+                let thread = res.body
+                assert.equal(thread._id, testThreadId)
+                assert.isUndefined(thread.delete_password)
+                assert.isArray(thread.replies)
                 done();
             })
     })
