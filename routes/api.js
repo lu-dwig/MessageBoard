@@ -126,6 +126,16 @@ module.exports = function (app) {
   //     return res.status(500).json({ error: 'Internal Server Error' });
   //   }
   // });
+
+  app.get('/api/replies/:board', (req, res) => {
+    Thread.findById(
+      req.query.thread_id,
+      (err, thread) => {
+        if (!err && thread) {
+          }
+      }
+    )
+  })
   // app.route('/api/threads/:board');
     
   // app.route('/api/replies/:board');
