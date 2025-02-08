@@ -66,32 +66,63 @@ module.exports = function (app) {
     )
   })
 
-  app.get('/api/threads/:board/', ( res,request) => {
-    Thread.find({board: request.params.board})
-      .sort({bumpedon_: 'desc'})
-      .limit(10)
-      .select('-delete_password -reported') 
-      .lean()
-      .exec((err, arrayOfThreads) => {
-        if (!err && arrayOfThreads){
+  // app.get('/api/threads/:board/', ( res,req) => {
+  //   Thread.find({board: req.params.board})
+  //     .sort({bumpedon_: 'desc'})
+  //     .limit(10)
+  //     .select('-delete_password -reported') 
+  //     .lean()
+  //     .exec((err, arrayOfThreads) => {
+  //       if (!err && arrayOfThreads){
 
-          arrayOfThreads.forEach((thread) =>{
-            /* Sorting of the replies */
-            thread.replies.sort((thread1, thread2) =>{
-              return thread2.createdon_ - thread1.createdon_
-            })
+  //         arrayOfThreads.forEach((thread) =>{
+  //           /* Sorting of the replies */
+  //           thread.replies.sort((thread1, thread2) =>{
+  //             return thread2.createdon_ - thread1.createdon_
+  //           })
 
-            /*Limit Replies To 3*/
-            thread.replies = thread.replies.slice(0, 3)
+  //           /*Limit Replies To 3*/
+  //           thread.replies = thread.replies.slice(0, 3)
 
-            /* Remove Delete Pass from Replies */
-            thread.replies.forEach((reply) =>{
-              reply.delete_password = undefined
-              reply.reported = undefined
-            })
-          })   
-        }
-      })
+  //           /* Remove Delete Pass from Replies */
+  //           thread.replies.forEach((reply) =>{
+  //             reply.delete_password = undefined
+  //             reply.reported = undefined
+  //           })
+  //         })   
+  //         return res.json(arrayOfThreads)
+  //       }
+  //     })
+  // });
+  app.get('/api/threads/:board/', async (req, res) => {
+    try {
+      const arrayOfThreads = await Thread.find({ board: req.params.board })
+        .sort({ bumpedon_: 'desc' })
+        .limit(10)
+        .select('-delete_password -reported')
+        .lean();
+  
+      if (arrayOfThreads) {
+        arrayOfThreads.forEach((thread) => {
+          // Sort replies by createdon_ (newest first)
+          thread.replies.sort((a, b) => b.createdon_ - a.createdon_);
+  
+          // Limit replies to 3
+          thread.replies = thread.replies.slice(0, 3);
+  
+          // Remove sensitive fields from replies
+          thread.replies.forEach((reply) => {
+            delete reply.delete_password;
+            delete reply.reported;
+          });
+        });
+      }
+  
+      return res.json(arrayOfThreads);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   });
   // app.route('/api/threads/:board');
     
