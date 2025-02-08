@@ -70,4 +70,18 @@ suite('Functional Tests', function() {
             })
     })
 
+
+
+    test('Delete a Thread', (done) => {
+        chai.request(server)
+           .delete('/api/threads/test')
+           .send({ 
+                thread_id: testThreadId, 
+                delete_password: testPass 
+            })
+           .end((err, res) => {
+                assert.equal(res.body, 'success');
+                done();
+            })
+    })
 });
