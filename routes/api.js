@@ -132,7 +132,11 @@ module.exports = function (app) {
       req.query.thread_id,
       (err, thread) => {
         if (!err && thread) {
-          }
+          thread.delete_password = undefined;
+          thread.reported = undefined; 
+          thread['replycount']= thread.replies.length
+          
+        }
       }
     )
   })
