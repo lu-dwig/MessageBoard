@@ -157,7 +157,19 @@ module.exports = function (app) {
       (err, threadToDelete) =>{
         if(!err && threadToDelete){
 
-          
+          if(threadToDelete.delete_password === req.body.delete_password){
+
+            Thread.findByIdAndRemove(
+              req.body.thread_id,
+              (err, deletedThread) => {
+                if (!err && deletedThread){
+                  return res.json('success')
+                }
+              }
+            )
+          }else{
+            return res.json('Incorrect Password')
+          }
         }else{
           return res.json('Thread Not Found')
         }
