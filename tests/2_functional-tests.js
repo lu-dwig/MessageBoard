@@ -41,5 +41,17 @@ suite('Functional Tests', function() {
                 done();
             });
     })
+    test('Get Threads from a Board', (done) => {
+        chai.request(server)
+            .get('/api/threads/test')
+            .send()
+            .end((err, res) => {
+                assert.isArray(res.body)
+                let firstThread = res.body[0]
+                assert.isUndefined(firstThread.delete_password)
+                assert.isAtMost(firstThread.replies.length, 3)
+                done();
+            })
+    })
 
 });
