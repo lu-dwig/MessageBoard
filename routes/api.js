@@ -139,10 +139,7 @@ module.exports = function (app) {
           thread.replies.sort((thread1, thread2) =>{
             return thread2.createdon_ - thread1.createdon_
           })
-
-          /*Limit Replies To 3*/
-          thread.replies = thread.replies.slice(0, 3)
-
+          
           /* Remove Delete Pass from Replies */
           thread.replies.forEach((reply) =>{
             reply.delete_password = undefined
