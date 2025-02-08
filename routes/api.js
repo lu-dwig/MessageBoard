@@ -46,14 +46,14 @@ module.exports = function (app) {
     })
 })
 
-  app.post('/api/threads/:board', (req, res) => {
+  app.post('/api/threads/:board/', (req, res) => {
 
   })
-
   app.post('/api/replies/:board', (req, res) => {
-    const newReply = new Reply(req.body)
+    let newReply = new Reply(req.body)
     newReply.createdon_ = new Date().toUTCString()
     newReply.reported = false
+    // console.log(newReply)
     Thread.findByIdAndUpdate(
       req.body.thread_id,
       { $push: { replies: newReply }, bumpedon_: new Date().toUTCString() }, 

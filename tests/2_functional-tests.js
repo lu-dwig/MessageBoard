@@ -20,11 +20,10 @@ suite('Functional Tests', function() {
             })
             .end((err, res) => {
                 assert.equal(res.status, 200);
-                const createdThreadId = res.redirects[0].split('/')[res.redirects[0].split('/').length - 1];
+                let createdThreadId = res.redirects[0].split('/')[res.redirects[0].split('/').length - 1];
                 testThreadId = createdThreadId
                 done();
             });
     })
-    
 
 });
