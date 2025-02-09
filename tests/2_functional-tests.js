@@ -70,7 +70,19 @@ suite('Functional Tests', function() {
             })
     })
 
-
+    test('Delete a Reply On a Thread', (done) => {
+        chai.request(server)
+           .delete('/api/replies/test')
+           .send({
+                thread_id: testThreadId, 
+                reply_id: testReplyId, 
+                delete_password: testPass 
+            })
+           .end((err, res) => {
+                assert.equal(res.body, 'success');
+                done();
+            })
+    })
 
     test('Delete a Thread', (done) => {
         chai.request(server)
@@ -84,4 +96,5 @@ suite('Functional Tests', function() {
                 done();
             })
     })
+
 });
