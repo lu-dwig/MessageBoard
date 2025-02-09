@@ -204,6 +204,21 @@ module.exports = function (app) {
       }
     )
   })
+
+  app.put('/api/threads/:board', (req, res) => {
+    
+    Thread.findByIdAndUpdate(
+      req.body.thread_id,
+      { reported: true }, 
+      { new: true },
+      (err, updatedThread) => {
+        if (!err && updatedThread){
+          return res.json('success')
+        }
+      }
+    )
+  })
+
   // app.route('/api/threads/:board');
         // threadToUpdate.replies.forEach((reply, index) => {
         //   if(reply._id.toString() === req.body.reply_id && reply.delete_password === req.body.delete_password){
