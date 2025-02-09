@@ -219,6 +219,16 @@ module.exports = function (app) {
     )
   })
 
+  app.put('/api/replies/:board', (req, res) => {
+    
+    Thread.findById(
+      req.body.thread_id,
+      (err, threadToUpdate) =>{
+        
+      }
+    )
+  })
+
   // app.route('/api/threads/:board');
         // threadToUpdate.replies.forEach((reply, index) => {
         //   if(reply._id.toString() === req.body.reply_id && reply.delete_password === req.body.delete_password){
