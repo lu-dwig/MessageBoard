@@ -233,7 +233,11 @@ module.exports = function (app) {
             } 
           }
 
-          
+          threadToUpdate.save((err, updatedThread) => {
+            if (!err && updatedThread){
+              return res.json('success')
+            }
+          })
         }else{
           return res.json('Thread Not Found')
         }
