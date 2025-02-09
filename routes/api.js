@@ -183,6 +183,15 @@ module.exports = function (app) {
       (err, threadToUpdate) =>{
         if(!err && threadToUpdate){
 
+          let i;
+          for ( i = 0; i < threadToUpdate.replies.length; i++ ) {
+            if(threadToUpdate.replies[i].id === req.body.reply_id)  
+              if(threadToUpdate.replies[i].delete_password === req.body.delete_password){
+                threadToUpdate.replies[i].texts ='[deleted]'
+              }else {
+                return res.json('Incorrect Password')
+              }
+          }
           
         }else{
           return res.json('Thread Not Found')
