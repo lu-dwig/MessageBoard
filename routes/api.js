@@ -224,7 +224,19 @@ module.exports = function (app) {
     Thread.findById(
       req.body.thread_id,
       (err, threadToUpdate) =>{
-        
+        if(!err && threadToUpdate){
+
+          let i;
+          for ( i = 0; i < threadToUpdate.replies.length; i++ ) {
+            if(threadToUpdate.replies[i].id === req.body.reply_id){  
+              threadToUpdate.replies[i].reported = true
+            } 
+          }
+
+          
+        }else{
+          return res.json('Thread Not Found')
+        }
       }
     )
   })
