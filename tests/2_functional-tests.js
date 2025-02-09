@@ -95,6 +95,18 @@ suite('Functional Tests', function() {
                 done();
             })
     })
+    test('Report a reply on a Thread', (done) => {
+        chai.request(server)
+           .put('/api/replies/test/report')
+           .send({
+                thread_id: testThreadId, 
+                reply_id: testReplyId, 
+            })
+           .end((err, res) => {
+                assert.equal(res.body, 'success');
+                done();
+            })
+    })
 
     test('Delete a Thread', (done) => {
         chai.request(server)
