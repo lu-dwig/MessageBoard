@@ -192,7 +192,12 @@ module.exports = function (app) {
                 return res.json('Incorrect Password')
               }
           }
-          
+
+          threadToUpdate.save((err, updatedThread) => {
+            if (!err && updatedThread){
+              return res.json('success')
+            }
+          })
         }else{
           return res.json('Thread Not Found')
         }
