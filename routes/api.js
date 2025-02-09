@@ -176,8 +176,31 @@ module.exports = function (app) {
       }
     )
   })
+
+  app.delete('/api/replies/:board', (req, res) =>{
+    Thread.findById(
+      req.body.thread_id,
+      (err, threadToUpdate) =>{
+        if(!err && threadToUpdate){
+
+          
+        }else{
+          return res.json('Thread Not Found')
+        }
+      }
+    )
+  })
   // app.route('/api/threads/:board');
-    
+        // threadToUpdate.replies.forEach((reply, index) => {
+        //   if(reply._id.toString() === req.body.reply_id && reply.delete_password === req.body.delete_password){
+        //     threadToUpdate.replies.splice(index, 1)
+        //     threadToUpdate.save((err, updatedThread) => {
+        //       if (!err && updatedThread){
+        //         return res.json('success')
+        //       }
+        //     })
+        //   }
+        // })
   // app.route('/api/replies/:board');
 
 };
