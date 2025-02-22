@@ -46,9 +46,6 @@ module.exports = function (app) {
     })
 })
 
-  app.post('/api/threads/:board/', (req, res) => {
-
-  })
   app.post('/api/replies/:board', (req, res) => {
     let newReply = new Reply(req.body)
     newReply.createdon_ = new Date().toUTCString()
@@ -128,13 +125,16 @@ module.exports = function (app) {
   // });
 
   app.get('/api/replies/:board', (req, res) => {
+    
     Thread.findById(
       req.query.thread_id,
       (err, thread) => {
+
         if (!err && thread) {
-          thread.delete_password = undefined;
+          thread.delete_password = undefined
           thread.reported = undefined; 
-          thread['replycount']= thread.replies.length
+          // thread['replycount']= thread.replies.length
+          
           /* Sorting of the replies */
           thread.replies.sort((thread1, thread2) =>{
             return thread2.createdon_ - thread1.createdon_
@@ -152,9 +152,11 @@ module.exports = function (app) {
   })
 
   app.delete('/api/threads/:board', (req, res) =>{
+    
     Thread.findById(
       req.body.thread_id,
       (err, threadToDelete) =>{
+
         if(!err && threadToDelete){
 
           if(threadToDelete.delete_password === req.body.delete_password){
@@ -178,19 +180,22 @@ module.exports = function (app) {
   })
 
   app.delete('/api/replies/:board', (req, res) =>{
+
     Thread.findById(
       req.body.thread_id,
       (err, threadToUpdate) =>{
+
         if(!err && threadToUpdate){
 
-          let i;
+          let i
           for ( i = 0; i < threadToUpdate.replies.length; i++ ) {
-            if(threadToUpdate.replies[i].id === req.body.reply_id)  
+            if(threadToUpdate.replies[i].id === req.body.reply_id){  
               if(threadToUpdate.replies[i].delete_password === req.body.delete_password){
                 threadToUpdate.replies[i].texts ='[deleted]'
               }else {
                 return res.json('Incorrect Password')
               }
+            }
           }
 
           threadToUpdate.save((err, updatedThread) => {
@@ -198,6 +203,7 @@ module.exports = function (app) {
               return res.json('success')
             }
           })
+
         }else{
           return res.json('Thread Not Found')
         }
@@ -209,9 +215,11 @@ module.exports = function (app) {
     
     Thread.findByIdAndUpdate(
       req.body.thread_id,
+
       { reported: true }, 
       { new: true },
       (err, updatedThread) => {
+        
         if (!err && updatedThread){
           return res.json('success')
         }
